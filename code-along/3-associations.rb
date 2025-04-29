@@ -12,6 +12,45 @@ Contact.destroy_all
 
 # 1. insert new rows in the contacts table with relationship to a company
 
+puts "Companies: #{Company.all.count}"
+puts "Contacts: #{Contact.all.count}"
+
+apple = Company.find_by({"name" => "Apple"})
+
+contact = Contact.new
+contact["first_name"] = "Tim"
+contact["last_name"] = "Cook"
+contact["email"] = "tim.cook@apple.com"
+contact["company_id"] = apple["id"]
+p contact
+contact.save
+
+contact = Contact.new
+contact["first_name"] = "Craig"
+contact["last_name"] = "Federighi"
+contact["email"] = "craig.federighi@apple.com"
+contact["company_id"] = apple["id"]
+p contact
+contact.save
+
+amazon = Company.find_by({"name" => "Amazon"})
+
+contact = Contact.new
+contact["first_name"] = "Jeff"
+contact["last_name"] = "Bezos"
+contact["email"] = "jeff.bezos@amazon.com"
+contact["company_id"] = amazon["id"]
+p contact
+contact.save
+
+puts "Contacts: #{Contact.all.count}"
+
 # 2. How many contacts work at Apple?
 
+contacts = Contact.where({"company_ID" => apple["id"]})
+p "Apple Contacts Count: #{contacts.count}"
+
 # 3. What is the full name of each contact who works at Apple?
+for contact in contacts
+    puts "#{contact["first_name"]} #{contact["last_name"]}"
+end
